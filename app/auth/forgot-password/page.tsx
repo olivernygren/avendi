@@ -1,11 +1,19 @@
 import { ForgotPasswordForm } from "@/components/forgot-password-form";
+import { Box } from "@chakra-ui/react";
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <Box
+      display="flex"
+      minH="100svh"
+      w="full"
+      alignItems="center"
+      justifyContent="center"
+      p={{ base: 6, md: 10 }}
+    >
+      <Box w="full" maxW="sm">
         <ForgotPasswordForm />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

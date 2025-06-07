@@ -1,9 +1,6 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
+import { Box, Flex, Text, Link, Container } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { ColorModeButton } from "@/components/ui/color-mode";
 
 export default function ProtectedLayout({
   children,
@@ -11,38 +8,85 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          {children}
-        </div>
+    <Box
+      as="main"
+      minH="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <Flex
+        flex="1"
+        w="full"
+        flexDirection="column"
+        gap={20}
+        alignItems="center"
+      >
+        <Box
+          as="nav"
+          w="full"
+          display="flex"
+          justifyContent="center"
+          borderBottom="1px"
+          borderColor="gray.200"
+          h="16"
+        >
+          <Flex
+            w="full"
+            maxW="5xl"
+            justifyContent="space-between"
+            alignItems="center"
+            p={3}
+            px={5}
+          >
+            <Flex gap={5} alignItems="center" fontWeight="semibold">
+              <Link asChild>
+                <NextLink href="/">Avendi App</NextLink>
+              </Link>
+            </Flex>
+            <ColorModeButton />
+          </Flex>
+        </Box>
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
+        <Container
+          maxW="5xl"
+          flex="1"
+          display="flex"
+          flexDirection="column"
+          gap={20}
+          p={5}
+        >
+          {children}
+        </Container>
+
+        <Box
+          as="footer"
+          w="full"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderTop="1px"
+          borderColor="gray.200"
+          mx="auto"
+          textAlign="center"
+          fontSize="xs"
+          gap={8}
+          py={16}
+        >
+          <Text>
             Powered by{" "}
-            <a
+            <Link
               href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
               target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
+              fontWeight="bold"
+              textDecoration="underline"
+              color="blue.500"
             >
               Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
-      </div>
-    </main>
+            </Link>
+          </Text>
+        </Box>
+      </Flex>
+    </Box>
   );
 }

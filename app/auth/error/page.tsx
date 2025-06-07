@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Box, Card, Heading, Text, Stack, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export default async function Page({
   searchParams,
@@ -8,29 +9,45 @@ export default async function Page({
   const params = await searchParams;
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">
-                Sorry, something went wrong.
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {params?.error ? (
-                <p className="text-sm text-muted-foreground">
-                  Code error: {params.error}
-                </p>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  An unspecified error occurred.
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
+    <Box
+      display="flex"
+      minH="100svh"
+      w="full"
+      alignItems="center"
+      justifyContent="center"
+      p={{ base: 6, md: 10 }}
+    >
+      <Box w="full" maxW="sm">
+        <Card.Root maxW="md" mx="auto" p={6}>
+          <Card.Body>
+            <Stack gap={6} textAlign="center">
+              <Stack gap={2}>
+                <Heading size="xl" color="red.500">
+                  Sorry, something went wrong.
+                </Heading>
+              </Stack>
+
+              <Stack gap={4}>
+                {params?.error ? (
+                  <Text color="gray.600" fontSize="sm">
+                    Error: {params.error}
+                  </Text>
+                ) : (
+                  <Text color="gray.600" fontSize="sm">
+                    An unspecified error occurred.
+                  </Text>
+                )}
+
+                <Text fontSize="sm" color="gray.600">
+                  <Link asChild color="blue.500" fontWeight="medium">
+                    <NextLink href="/auth/login">Try signing in again</NextLink>
+                  </Link>
+                </Text>
+              </Stack>
+            </Stack>
+          </Card.Body>
+        </Card.Root>
+      </Box>
+    </Box>
   );
 }
